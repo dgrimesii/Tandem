@@ -24,7 +24,10 @@ Each person has their own set of plans reflecting individual goals, physical con
 Every logged activity carries tags (e.g. `cardio`, `strength`, `flexibility`). Quests are defined against tags — not specific activities — so a bike commute and a Peloton ride both contribute to the same cardio quest.
 
 ### Effort Points
-Raw activity minutes are converted to effort points using personal and activity multipliers. This accounts for differences in baseline fitness so each person's contribution reflects their relative effort, not absolute output.
+Raw activity minutes are converted to effort points that reflect how hard a session actually was — for that person, on that day. Effort level resolves through a three-priority hierarchy: an explicit user rating (Easy / Moderate / Hard / Maximum) takes precedence; heart rate data from a monitor produces a precise biometric-based value; and when neither is available, an estimate is derived from the activity type, duration, and the user's fitness baseline. A personal multiplier accounts for differences in fitness level between users, so contributions to shared quests feel genuinely equitable.
+
+### Activity Suitability
+Each activity type carries objective stress impact data across multiple body systems (knee, lumbar spine, hip, ankle/foot, and others). Each user's active physical conditions are stored separately in their profile. These two facts are joined at query time to determine whether an activity is suitable, flagged, or to be avoided for that specific person today — without hardcoding any user's concerns into the activity library itself.
 
 ### Quests
 Time-bound goals that can be individual, shared (both contribute to one pool), parallel (same goal completed independently), or long-arc milestones. Quests are always winnable and always forward-looking.
@@ -33,7 +36,21 @@ Time-bound goals that can be individual, shared (both contribute to one pool), p
 Two-tier streak system: a daily Activity Streak (with Streak Shields earned through consistent weeks) and a weekly Journey Streak that reflects the longer pattern. One bad day never ends the story.
 
 ### Quest Awareness Engine
-Proactive pace tracking for every active quest. Surfaces risk state (On Track / Heads Up / At Risk / Critical) before a window closes — not after.
+Proactive pace tracking for every active quest. Surfaces risk state (On Track / Heads Up / At Risk / Critical) before a window closes — not after. Projections use each user's planned activity schedule, not just historical pace.
+
+---
+
+## Five Pillars
+
+| Pillar | What it owns |
+|---|---|
+| **Identity** | Who you are — profile, fitness tier, physical conditions, heart rate baseline, partnership |
+| **Library** | What you can do — activity catalog, tags, body system impacts, classification rules |
+| **Record** | What you did — activity logging, biometrics, effort calculation, comfort signals |
+| **Plans** | Where you're going — weekly targets, progressions, weather fallbacks, plan intent |
+| **Momentum** | What keeps you going — quests, streaks, milestones, awareness engine, celebrations |
+
+See `docs/design/pillars.md` for full definitions and `docs/design/effort-calculation.md` for the effort point specification.
 
 ---
 
@@ -65,7 +82,7 @@ Proactive pace tracking for every active quest. Surfaces risk state (On Track / 
 
 | Phase | Focus |
 |---|---|
-| **Phase 1** | Profiles, Personal Plans, Activity Tagging, Quest Engine (manual logging), Streak System |
+| **Phase 1** | Profiles, Personal Plans, Activity Library, Quest Engine (manual logging), Streak System |
 | **Phase 2** | Strava OAuth integration, automated sync |
 | **Phase 3** | LLM layer — quest suggestions, weekly summaries, motivational copy |
 | **Phase 4** | Peloton + Health Connect integration |
